@@ -1,0 +1,23 @@
+name: Lint
+on:
+  push:
+    branches: [main]
+  pull_request_target:
+    branches: [main]
+jobs:
+  run-linters:
+    name: Run linters
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm install
+      - name: Run linters
+        uses: wearerequired/lint-action@77d70b9a07ecb93bc98dc46dc27d96c4f004d035
+        with:
+          github_token: ${{ secrets.github_token }}
+          eslint: true
+          eslint_extensions: js,jsx,ts,tsx,json
+          auto_fix: true
